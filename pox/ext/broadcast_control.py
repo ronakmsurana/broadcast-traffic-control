@@ -55,7 +55,7 @@ class BroadcastMitigator(object):
         if packet.dst in self.macToPort:
             # We know the port, install a flow rule for forwarding unicast traffic
             port = self.macToPort[packet.dst]
-            
+            log.info("✅ SELECTIVE FORWARDING for Switch %d: Learned MAC %s -> Sending via Port %s", event.dpid, packet.dst, port)
             msg = of.ofp_flow_mod()
             msg.match = of.ofp_match(dl_dst=packet.dst)
             msg.actions.append(of.ofp_action_output(port=port))
